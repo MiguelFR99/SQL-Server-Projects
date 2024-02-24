@@ -1,3 +1,4 @@
+USE AdventureWorks2017
 SELECT * FROM Sales.SalesOrderHeader WHERE SalesOrderID = 43659
 
 SELECT * FROM Sales.SalesOrderDetail WHERE SalesOrderID = 43659
@@ -166,7 +167,7 @@ INNER JOIN (
 WHERE YEAR(SOH.OrderDate) = 2013
 
 
--- 2: combinar las tablas
+-- 2: combine the tables
 
 SELECT SOH.SalesOrderID 
 	  ,SOH.OrderDate
@@ -232,15 +233,6 @@ INNER JOIN Person.Person AS PP
 WHERE EndDate IS NULL
 
 
--- SESION 10:
--- Tabla/Vista de Demographics
--- Tablas Temporales
--- CTE
--- Vistas/Views
--- Procedimientos Almacenados / Stored Procedures
-
-
-
 SELECT CUS.CustomerID
 	 ,CUS.AccountNumber
 	 --,CUS.TerritoryID
@@ -267,9 +259,9 @@ INNER JOIN Sales.vPersonDemographics AS PD
 	ON PD.BusinessEntityID = PP.BusinessEntityID
 WHERE CUS.StoreID IS NULL
 
--- TABLA TEMPORAL
+-- TEMP TABLE:
 
--- EJ 1
+-- First temp. table:
 
 SELECT 	 PD.BusinessEntityID
      ,PD.DateFirstPurchase
@@ -356,7 +348,7 @@ INNER JOIN #TablaTemporal AS PD1
 WHERE CUS.StoreID IS NULL
 
 
--- EJ. 2
+-- Second temp. table:
 
 
 SELECT P.ProductID -- 295
@@ -409,7 +401,7 @@ WHERE YEAR(SOH.OrderDate) = 2013
 -- CTE (COMMON TABLE EXPRESSION)
 
 
--- EJ. 1
+-- First CTE:
 WITH TablaDemografica AS (
 SELECT 	 PD.BusinessEntityID
      ,PD.DateFirstPurchase
@@ -446,7 +438,7 @@ INNER JOIN TablaDemografica AS PD1
 WHERE CUS.StoreID IS NULL
 
 
--- EJ. 2
+-- Second CTE:
 
 WITH Productos AS (
 SELECT P.ProductID -- 295
@@ -496,11 +488,11 @@ WHERE YEAR(SOH.OrderDate) = 2013
 
 
 
--- VISTA / VIEWS
+-- VIEWS:
 
 CREATE OR ALTER VIEW VWDatosDemograficos
 AS
--- EJ. 1
+-- First view:
 WITH TablaDemografica AS (
 SELECT 	 PD.BusinessEntityID
      ,PD.DateFirstPurchase
@@ -544,7 +536,7 @@ GROUP BY YearlyIncome
 
 CREATE OR ALTER VIEW VWVentas
 AS
--- EJ. 2
+-- Second example:
 
 WITH Productos AS (
 SELECT P.ProductID -- 295
@@ -596,7 +588,7 @@ WHERE YEAR(SOH.OrderDate) = 2013
 SELECT * 
 FROM VWVentas
 
--- PROCEDIMIENTO ALMACENADO / STORED PROCEDURE
+-- STORED PROCEDURE:
 
 CREATE VIEW Ventas0901
 AS
