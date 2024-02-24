@@ -1,31 +1,31 @@
---1ºCONSULTA: Proporcionar un listado de productos compuesto por nombre, número de producto y color 
+--1ÂºCONSULTA: Proporcionar un listado de productos compuesto por nombre, nÃºmero de producto y color 
 --para aquellos con un precio superior a 20 euros y con tallas de XS-XL.
 select Nombre, NumeroProducto, Color
 from EC_Productos
 where Precio>20 and Talla_disponibles = 'XS-XL'
 
---2ºCONSULTA: Proporcionar un listado de clientes individuos compuesto por IDCliente, nombre, apellidos y género que hayan nacido 
---entre 1970 y 1980, cuya ocupación no sea investigador, ordenados por fecha de primera compra de forma descendente.
+--2ÂºCONSULTA: Proporcionar un listado de clientes individuos compuesto por IDCliente, nombre, apellidos y gÃ©nero que hayan nacido 
+--entre 1970 y 1980, cuya ocupaciÃ³n no sea investigador, ordenados por fecha de primera compra de forma descendente.
 select IDCliente, Nombre, Apellidos, Genero
 from EC_Clientes_IN
 where (Fecha_Nacimiento >= '1970-01-01' and Fecha_Nacimiento < '1980-01-01') and Ocupacion <> 'Investigador'
 order by Fecha_Primera_Compra desc
 
---Otra forma sería utilizando BETWEEN :WHERE Fecha_Nacimiento BETWEEN '1970-01-01' AND '1980-12-31' AND Ocupacion <>'Investigador'
+--Otra forma serÃ­a utilizando BETWEEN :WHERE Fecha_Nacimiento BETWEEN '1970-01-01' AND '1980-12-31' AND Ocupacion <>'Investigador'
 
---3ºCONSULTA: Obtener un listado compuesto por factura, fecha de pedido, fecha de envío y estado de pedido que contengan los 
---códigos 9658 y 4568 en las observaciones. Pista: Utilizar OR
+--3ÂºCONSULTA: Obtener un listado compuesto por factura, fecha de pedido, fecha de envÃ­o y estado de pedido que contengan los 
+--cÃ³digos 9658 y 4568 en las observaciones. Pista: Utilizar OR
 select IDFactura, FechaPedido, FechaEnvio, EstadoPedido,observaciones
 from EC_Facturas
 where Observaciones like '%9658%' or Observaciones like '%4568%'
 
---4ºCONSULTA: Proporcionar un listado de IDFactura, IDCliente, fecha de pedido y total con impuestos cuyo estado sea cancelado 
+--4ÂºCONSULTA: Proporcionar un listado de IDFactura, IDCliente, fecha de pedido y total con impuestos cuyo estado sea cancelado 
 --y el total con impuestos sea mayor que 1000.
 select IDFactura, IDCliente, FechaPedido, Total_con_Impuestos
 from EC_Facturas
 where EstadoPedido = 'Cancelado' and Total_con_Impuestos > 1000
 
---5ºCONSULTA: Utilizando como base la consulta anterior, y utilizándola como una subconsulta, obtener el denominación social y teléfono de esos clientes.
+--5ÂºCONSULTA: Utilizando como base la consulta anterior, y utilizÃ¡ndola como una subconsulta, obtener el denominaciÃ³n social y telÃ©fono de esos clientes.
 select CEM.DenominacionSocial, CEM.Telefono as Telefono_empresa,Total_con_Impuestos
 from EC_Clientes_EM as CEM
 Inner join		(select IDFactura, IDCliente, FechaPedido, Total_con_Impuestos
@@ -33,7 +33,7 @@ Inner join		(select IDFactura, IDCliente, FechaPedido, Total_con_Impuestos
 				where EstadoPedido = 'Cancelado' and Total_con_Impuestos > 1000) as FA
 	on CEM.IDCliente = FA.IDCliente
 
---6ºCONSULTA: Obtener un listado compuesto por factura, nombre de producto, color, precio unitario, cantidad 
+--6ÂºCONSULTA: Obtener un listado compuesto por factura, nombre de producto, color, precio unitario, cantidad 
 --y el % de descuento de las transacciones realizadas entre el abril y septiembre de 2019.
 select TR.IDFactura, Nombre, Color, Precio, Cantidad, Descuento
 from EC_Transacciones as TR
@@ -43,16 +43,16 @@ inner join EC_Facturas as FR
 	on TR.IDFactura = FR.IDFactura
 where (FechaPedido >= '2019-04-01' and FechaPedido < '2019-10-01')
 
---Otra forma sería con Between:  where FechaPedido BETWEEN '2019-04-01' AND '2019-09-30'
+--Otra forma serÃ­a con Between:  where FechaPedido BETWEEN '2019-04-01' AND '2019-09-30'
 
---7ºCONSULTA: Se desea saber cuántos productos hay por cada categoría de productos, así como el precio máximo, precio mínimo y 
---precio medio por cada categoría, ordenados de mayor a menor en función del recuento por categoría.
+--7ÂºCONSULTA: Se desea saber cuÃ¡ntos productos hay por cada categorÃ­a de productos, asÃ­ como el precio mÃ¡ximo, precio mÃ­nimo y 
+--precio medio por cada categorÃ­a, ordenados de mayor a menor en funciÃ³n del recuento por categorÃ­a.
 
 select	PR.GrupoProductoID,
         CPR.Nombre,
 		count(PR.GrupoProductoID) as Recuento 
-		,MAX(PR.Precio) as Precio_Máximo
-		,MIN(PR.Precio) as Precio_Mínimo
+		,MAX(PR.Precio) as Precio_MÃ¡ximo
+		,MIN(PR.Precio) as Precio_MÃ­nimo
 		,AVG(PR.Precio) as Precio_Medio
 from EC_Cat_Productos as CPR
 inner join EC_Productos as PR
@@ -60,7 +60,7 @@ inner join EC_Productos as PR
 group by PR.GrupoProductoID, CPR.Nombre
 order by COUNT(PR.GrupoProductoID) desc
 
---8ºCOSULTA: Obtener las ventas totales con impuestos por país y región. Excluyendo los pedidos cancelados. 
+--8ÂºCOSULTA: Obtener las ventas totales con impuestos por paÃ­s y regiÃ³n. Excluyendo los pedidos cancelados. 
 --Ordenados de menor a mayor por el total de las ventas.
 select TER.Pais, TER.Region, sum(FR.Total_con_Impuestos) as 'Ventas totales con Impuestos'
 from EC_Clientes as CL
@@ -72,7 +72,7 @@ where EstadoPedido is not '%Cancelado%'
 group by TER.Pais, TER.Region
 order by SUM(FR.Total_con_Impuestos)
 
---Aquí se obtendrían las ventas totales organizadas por región.
+--AquÃ­ se obtendrÃ­an las ventas totales organizadas por regiÃ³n.
 select TER.Region, sum(FR.Total_con_Impuestos) as 'Ventas totales con Impuestos'
 from EC_Clientes as CL
 inner join EC_Facturas as FR
@@ -83,10 +83,10 @@ where EstadoPedido is not '%Cancelado%'
 group by TER.Region
 order by SUM(FR.Total_con_Impuestos)
 
---9º CONSULTA: Se desea saber el número de pedidos, el montante total sin impuestos para clientes individuos, 
---así como el nombre y el número de cuenta de los mismos.  Solo queremos aquellos cuyo montante total supera los 1500 euros. 
---Ordenar el resultado de mayor a menor en función del montante total calculado.
-select	count(FR.Total) as 'Número de Pedidos Realizados'
+--9Âº CONSULTA: Se desea saber el nÃºmero de pedidos, el montante total sin impuestos para clientes individuos, 
+--asÃ­ como el nombre y el nÃºmero de cuenta de los mismos.  Solo queremos aquellos cuyo montante total supera los 1500 euros. 
+--Ordenar el resultado de mayor a menor en funciÃ³n del montante total calculado.
+select	count(FR.Total) as 'NÃºmero de Pedidos Realizados'
 		, sum(FR.Total) as 'Total Pedidos Sin impuestos'
 		, CLIN.Nombre
 		, CL.NumeroCuenta
@@ -102,7 +102,7 @@ order by sum(FR.Total) desc
 
 --4 PROPUESTAS DE CONSULTAS:
 
---1º PROPUESTA: Proporcionar los nombres, apellidos y las fechas de primera compra de los clientes inviduales cuyo apellido contenga una A 
+--1Âº PROPUESTA: Proporcionar los nombres, apellidos y las fechas de primera compra de los clientes inviduales cuyo apellido contenga una A 
 
 SELECT Nombre, 
        Apellidos,
@@ -110,7 +110,7 @@ SELECT Nombre,
 FROM EC_Clientes_IN
 WHERE Apellidos LIKE '%A%'
 
---2ª PROPUESTA: Proporcionar el recuento de las talla de producto disponible, nombre de producto en ingles y el identificador del grupo de producto 
+--2Âª PROPUESTA: Proporcionar el recuento de las talla de producto disponible, nombre de producto en ingles y el identificador del grupo de producto 
 --donde el peso del producto sea mayor que 100, en orden descendente del recuento de la talla
 
 
@@ -128,13 +128,13 @@ GROUP BY PR.GrupoProductoID,
 ORDER BY CantidadTallas DESC
 
 
---3ª PROPUESTA: Proporcionar el número de transacción, Identificador del producto, el número de días entre la fecha del pedido y su envío (DATEDIFF('','',''), 
---fecha de actualización. Se debe tener en cuenta que el estado del envío debe ser «enviado». Ordenar de mayor a menor según el número de días calculado.
+--3Âª PROPUESTA: Proporcionar el nÃºmero de transacciÃ³n, Identificador del producto, el nÃºmero de dÃ­as entre la fecha del pedido y su envÃ­o (DATEDIFF('','',''), 
+--fecha de actualizaciÃ³n. Se debe tener en cuenta que el estado del envÃ­o debe ser Â«enviadoÂ». Ordenar de mayor a menor segÃºn el nÃºmero de dÃ­as calculado.
 
 SELECT TR.IDTransaccion,
        TR.IDProducto,
 	   CL.Fecha_Actualizacion,
-       DATEDIFF(day,FechaPedido, FechaEnvio) AS Días
+       DATEDIFF(day,FechaPedido, FechaEnvio) AS DÃ­as
 FROM  EC_Facturas AS FAC
 inner join EC_Transacciones AS TR
       ON TR.IDFactura=FAC.IDFactura
@@ -142,10 +142,10 @@ inner join EC_Clientes AS CL
       ON CL.IDCliente=FAC.IDCliente
 WHERE FAC.EstadoPedido ='Enviado'
       AND CL.Fecha_Actualizacion IS NOT NULL
-ORDER BY Días DESC
+ORDER BY DÃ­as DESC
 
---4ª PROPUESTA: Calcular el nombre, número de pedidos, el montante total (con impuestos incluidos) para cada empresa y la media de gasto por pedido de cada una 
---sin contar aquellos cancelados o cuyo importe sea 0 y agruparlo por cada una de ellas. Ordenar el resultado de mayor a menor en función del total calculado.
+--4Âª PROPUESTA: Calcular el nombre, nÃºmero de pedidos, el montante total (con impuestos incluidos) para cada empresa y la media de gasto por pedido de cada una 
+--sin contar aquellos cancelados o cuyo importe sea 0 y agruparlo por cada una de ellas. Ordenar el resultado de mayor a menor en funciÃ³n del total calculado.
 select	CEM.DenominacionSocial,CEM.Tipo
 		, sum(FR.Total_con_Impuestos) as 'Total Gastado'
 		, AVG(FR.Total_con_Impuestos) as 'Media de gasto por pedido'
