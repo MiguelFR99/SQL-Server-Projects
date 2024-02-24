@@ -1,13 +1,13 @@
---CREAR TABLA
---INSERTAR REGISTROS (VARIAS MANERAS)
---ELIMINAR DATOS, REGISTROS Y TABLAS
---ACTUALIZAR DATOS
+--1. CREATE TABLES
+--2. INSERT RECORDS (DIFFERENT WAYS)
+--3. DELETE DATA, RECORDS, AND TABLES
+--4. UPDATE DATA
 
---CREAR TABLA:
+--1. CREATE TABLES:
 CREATE TABLE EC_Clientes_IN_Manipular_Datos_Ejemplo (
 		IDClienteIN INT,
 		IDCliente INT,
-		Nombre VARCHAR(100), --el 100 es la m·xima longitud permitida de caracteres
+		Nombre VARCHAR(100), --el 100 es la m√°xima longitud permitida de caracteres
 		Apellidos VARCHAR(100),
 		Fecha_Nacimiento DATETIME,
 		Pasaporte VARCHAR(100),
@@ -17,9 +17,9 @@ CREATE TABLE EC_Clientes_IN_Manipular_Datos_Ejemplo (
 		Telefono INT);
 
 SELECT*
-FROM EC_Clientes_IN_Manipular_Datos_Ejemplo; --Saldr·n los atributos de la tabla sin registros
+FROM EC_Clientes_IN_Manipular_Datos_Ejemplo; --Saldr√°n los atributos de la tabla sin registros
 
---INSERTAR REGISTROS (VARIAS MANERAS):
+--2. INSERT RECORDS (DIFFERENT WAYS):
 INSERT INTO EC_Clientes_IN_Manipular_Datos_Ejemplo (IDClienteIN, IDCliente, Nombre, Apellidos, Fecha_Nacimiento, Pasaporte, Ocupacion, Genero, Fecha_Primera_Compra, Telefono)
 VALUES	(45, 45567, 'Sharon', 'Anderson', '19771127', 55557132036181, 'Analista', 'M',	'20140113', 6458978),
 (50, 45578, 'Margie', 'Tibbott', '19570619', 55553465625901, 'Profesor', 'M', '20171231', 7527771);
@@ -27,14 +27,14 @@ VALUES	(45, 45567, 'Sharon', 'Anderson', '19771127', 55557132036181, 'Analista',
 SELECT*
 FROM EC_Clientes_IN_Manipular_Datos_Ejemplo;
 
---ELIMINAR DATOS, REGISTROS Y TABLAS:
-DELETE FROM EC_Clientes_IN_Manipular_Datos_Ejemplo --Eliminar· todos los registros de la tabla
+--3. DELETE DATA, RECORDS, AND TABLES:
+DELETE FROM EC_Clientes_IN_Manipular_Datos_Ejemplo --Eliminar√° todos los registros de la tabla
 
 DELETE FROM EC_Clientes_IN_Manipular_Datos_Ejemplo
-WHERE IDClienteIN = 46 --Nos eliminar· a dicho cliente
+WHERE IDClienteIN = 46 --Nos eliminar√° a dicho cliente
 
 DELETE FROM EC_Clientes_IN_Manipular_Datos_Ejemplo
-WHERE Nombre LIKE 'M%' --Nos eliminar· a todos los clientes cuyo nombre empiece por M
+WHERE Nombre LIKE 'M%' --Nos eliminar√° a todos los clientes cuyo nombre empiece por M
 
 DELETE FROM EC_Clientes_IN_Manipular_Datos_Ejemplo
 WHERE IDClienteIN
@@ -42,17 +42,17 @@ WHERE IDClienteIN
 SUBCONSULTA --Se hace una subconsulta para conseguir eliminar los datos que necesitamos
 
 DELETE FROM EC_Clientes_IN_Manipular_Datos_Ejemplo
-WHERE IDClienteIN IN SUBCONSULTA  --Se eliminar·n los datos de la subconsulta
+WHERE IDClienteIN IN SUBCONSULTA  --Se eliminar√°n los datos de la subconsulta
 
-TRUNCATE TABLE EC_Clientes_IN_Manipular_Datos_Ejemplo --Eliminar· los registros de la tabla
+TRUNCATE TABLE EC_Clientes_IN_Manipular_Datos_Ejemplo --Eliminar√° los registros de la tabla
 
-DROP TABLE EC_Clientes_IN_Manipular_Datos_Ejemplo --Eliminar· toda la tabla
+DROP TABLE EC_Clientes_IN_Manipular_Datos_Ejemplo --Eliminar√° toda la tabla
 
---ACTUALIZAR DATOS:
+--2. UPDATE DATA 
 UPDATE EC_Clientes_IN_Manipular_Datos_Ejemplo
 SET Ocupacion = 'Investigador', Nombre = 'Sarah'
-WHERE IDClienteIN = 45 --Nos cambiar· los datos del cliente 45
+WHERE IDClienteIN = 45 --Nos cambiar√° los datos del cliente 45
 
 UPDATE EC_Clientes_IN_Manipular_Datos_Ejemplo
 SET Ocupacion = 'Investigador',
-WHERE IDClienteIN IN (45,50) --Siendo dos clientes los que queremos cambair se pondrÌa asÌ
+WHERE IDClienteIN IN (45,50) --Siendo dos clientes los que queremos cambair se pondr√≠a as√≠
