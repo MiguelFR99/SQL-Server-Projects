@@ -261,14 +261,7 @@ INNER JOIN Sales.vPersonDemographics AS VPD
 	ON VPD.BusinessEntityID = CUS.PersonID
 WHERE CUS.StoreID IS NULL
 
-
--- SESION 11:
--- Tablas Temporales
--- CTE
--- Vistas/Views
--- Procedimientos Almacenados / Stored Procedures
-
--- TABLA TEMPORAL
+-- TEMP TABLE
 
 SELECT 	 PD.BusinessEntityID
      ,PD.DateFirstPurchase
@@ -300,7 +293,6 @@ INNER JOIN Person.Person AS PP
 INNER JOIN Sales.SalesTerritory AS ST
 	ON ST.TerritoryID = CUS.TerritoryID
 INNER JOIN (
-
 		SELECT 	 PD.BusinessEntityID
 			 ,PD.DateFirstPurchase
 			 ,PD.BirthDate
@@ -315,13 +307,12 @@ INNER JOIN (
 			 ,PD.NumberCarsOwned
 		FROM Sales.vPersonDemographics AS PD
 		WHERE PD.BirthDate IS NOT NULL
-
 			) AS SB
 	ON SB.BusinessEntityID = PP.BusinessEntityID
 WHERE CUS.StoreID IS NULL
 
 
-
+--This is the subquery that will be included in the query:
 		SELECT 	 PD.BusinessEntityID
 			 ,PD.DateFirstPurchase
 			 ,PD.BirthDate
@@ -492,8 +483,7 @@ INNER JOIN Productos as tp
 WHERE YEAR(SOH.OrderDate) = 2013
 
 
--- VISTA/VIEW
-
+-- VIEWs
 
 CREATE VIEW VWDatosDemograficos
 AS
@@ -542,7 +532,7 @@ where Territory = 'Australia'
 
 
 
-
+--VIEWS:
 CREATE VIEW VWVentas
 AS
 
@@ -597,7 +587,7 @@ FROM VWVentas
 WHERE YEAR(OrderDate) =  2013
 
 
--- STORED PROCEDURE / PROCEDIMIENTOS ALMACENADOS
+-- STORED PROCEDURE
 CREATE OR ALTER PROCEDURE SPVentas0901
 	@YEAR INT
 AS
