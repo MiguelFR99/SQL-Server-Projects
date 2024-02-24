@@ -1,7 +1,7 @@
 -- PARTE I: SERIES TEMPORALES
 
--- 1. Primera consulta: Debemos combinar ambas tablas a trav閟 del SalesOrderID, establecer la funci髇 de agregaci髇 (Sumatorio) en SELECT 
--- y utilizar GROUP BY para especificar el modo de agrupar. Para su 髉tima visualizaci髇, lo ideal es ordenar los registros por fecha.
+-- 1. Primera consulta: Debemos combinar ambas tablas a trav茅s del SalesOrderID, establecer la funci贸n de agregaci贸n (Sumatorio) en SELECT 
+-- y utilizar GROUP BY para especificar el modo de agrupar. Para su 贸ptima visualizaci贸n, lo ideal es ordenar los registros por fecha.
 SELECT	SOH.OrderDate,
 		SUM(SOD.LineTotal) AS Sales
 FROM SALES.SalesOrderHeader AS SOH
@@ -9,7 +9,7 @@ INNER JOIN Sales.SalesOrderDetail AS SOD
 	ON SOH.SalesOrderID = SOD.SalesOrderID
 GROUP BY SOH.OrderDate
 ORDER BY SOH.OrderDate
--- 2. Adicionalmente, nos solicitan obtener las ventas por regi髇 (EEUU, Europa y Pacifico), incluyendo, un dataset final 
+-- 2. Adicionalmente, nos solicitan obtener las ventas por regi贸n (EEUU, Europa y Pacifico), incluyendo, un dataset final 
 -- que contenga las mencionadas variables. Siendo 3 consultas en total.
 
 -- Total ventas Europa
@@ -38,7 +38,7 @@ WHERE SST.[Group] = 'North America'
 GROUP BY SST.[Group], SOH.OrderDate
 ORDER BY SOH.OrderDate
 
--- Total ventas Pac韋ico
+-- Total ventas Pac铆fico
 SELECT	SOH.OrderDate,
 		SST.[Group],
 		SUM(SOD.LineTotal) AS SalesPacific
@@ -53,7 +53,7 @@ ORDER BY SOH.OrderDate
 
 -- 3. Para poder combinar las consultas anteriores debemos utilizar la primera como consulta base y las otras 3 como subconsultas. 
 -- Para ello debemos identificar la clave que nos permite combinarlas (Pista: Inteligencia Temporal). Debemos elegir adecuadamente 
--- entre INNER JOIN y LEFT JOIN teniendo en cuanta que pueden existir d韆s con ventas en ciertas regiones y en otras no. 
+-- entre INNER JOIN y LEFT JOIN teniendo en cuanta que pueden existir d铆as con ventas en ciertas regiones y en otras no. 
 SELECT	SOH.OrderDate,
 		SUM(SOD.LineTotal) AS Sales,
 		SNA.LineTotal AS SalesUSA,
@@ -132,8 +132,8 @@ GROUP BY SC.CustomerID, SST.[Name], SST.CountryRegionCode, SST.[Group], SC.Perso
 ORDER BY CustomerID
 
 
--- PARTE III: DATASET DE CLIENTES PARA CLASIFICACI覰 (REGRESI覰 LOG蚐TICA)
-SELECT	SUM(SOH.SubTotal) AS TotalAmount, -- En el word aparece que deber韆 ser el gasto medio por cliente, pero en el excel aparece la cifra del gasto total. Si lo que se pidiera es el gasto medio ser韆: AVG(SOH.SubTotal) AS AverageAmount
+-- PARTE III: DATASET DE CLIENTES PARA CLASIFICACI脫N (REGRESI脫N LOG脥STICA)
+SELECT	SUM(SOH.SubTotal) AS TotalAmount, -- En el word aparece que deber铆a ser el gasto medio por cliente, pero en el excel aparece la cifra del gasto total. Si lo que se pidiera es el gasto medio ser铆a: AVG(SOH.SubTotal) AS AverageAmount
 		CASE 
 			WHEN BP.ProductCategoryID IS NULL THEN 0
 			ELSE 1
